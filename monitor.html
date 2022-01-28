@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>du_stx</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="preview.css" >
+    <link rel="stylesheet" type="text/css" href="MyPaging.css">
+
+
+	<script src="jquery.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+
+
+</head>
+<body style="padding-left: 30px; padding-right: 30px; padding-top:30px; padding-bottom: 100px">
+
+<table>
+    <tr>
+        <td colspan="3">
+            <form class="form-inline" role="form" style="margin-bottom:5px">
+                <div class="form-group">
+                  <span class="form-control btn btn-warning" onclick="$('#modal_add_goods').modal('show')">添加监控规则</span>
+                </div>
+            </form>
+        </td>
+    </tr>
+</table>
+<div>
+<div>
+    <input type="hidden" id="curr_page"/>
+    <input type="hidden" id="curr_sort_name"/>
+    <input type="hidden" id="curr_sort_order"/>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+{#                <th><input type="checkbox" id="checkAll" name="checkAll" /></th>#}
+                <th>创建时间</th>
+                <th>备注</th>
+                <th>sku</th>
+                <th>尺码</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="tb">
+        </tbody>
+    </table>
+    <div class="box2"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modal_add_goods" tabindex="-1" role="dialog" aria-labelledby="myModalLabel4" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel2">
+					添加监控规则
+				</h4>
+			</div>
+			<div class="modal-body">
+                <form class="form-horizontal" role="form" id="monitor_form">
+                    <input type="hidden" id="id">
+                    <div class="form-group">
+                        <label for="du_tech_money" class="col-sm-4 control-label">货号</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" name="codes" id="codes" rows="10" placeholder="请输入商品货号，一行一个, 只有系统已存在的货号才能被监控到"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="price_diff" class="col-sm-4 control-label">S/D两平台差价大于</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" name="price_diff"  placeholder="差价"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="price_diff_rate" class="col-sm-4 control-label">S/D两平台差价率大于(%)</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" name="price_diff_rate"  placeholder="差价率"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="d_sale_diff_day" class="col-sm-3 control-label">D天销量波动大于</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" name="d_sale_diff_day"  placeholder="得物天销量波动"></input>
+                        </div>
+                        <label for="d_sale_diff_week" class="col-sm-3 control-label">D周销量波动大于</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" name="d_sale_diff_week"  placeholder="得物周销量波动"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="d_price_diff_day" class="col-sm-3 control-label">D天价格波动大于</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" name="d_price_diff_day"  placeholder="得物天价格波动大于"></input>
+                        </div>
+                        <label for="d_price_diff_week" class="col-sm-3 control-label">D周价格波动大于</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" name="d_price_diff_week"  placeholder="得物周价格波动大于"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="s_sale_diff_day" class="col-sm-3 control-label">S天销量波动大于</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" name="s_sale_diff_day"  placeholder="StockX天销量波动大于"></input>
+                        </div>
+                        <label for="s_sale_diff_week" class="col-sm-3 control-label">S周销量波动大于</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" name="s_sale_diff_week"  placeholder="StockX周销量波动大于"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="s_price_diff_day" class="col-sm-3 control-label">S天价格波动大于</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" name="s_price_diff_day"  placeholder="StockX天价格波动大于"></input>
+                        </div>
+                        <label for="s_price_diff_week" class="col-sm-3 control-label">S周价格波动大于</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control" name="s_price_diff_week"  placeholder="StockX周价格波动大于"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="monitor_frequency" class="col-sm-4 control-label">监控频率(s)</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" name="monitor_frequency"  placeholder="监控频率"></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="monitor_frequency" class="col-sm-4 control-label">备注</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="remarks"  placeholder="备注"></input>
+                        </div>
+                    </div>
+                </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+				<button type="button" class="btn btn-primary" onclick="save_monitor()">
+					保存
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+
+
+
+<div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
+    <div id="innerdiv" style="position:absolute;">
+        <img id="bigimg" style="border:5px solid #fff;" src="" />
+    </div>
+</div>
+
+<div>
+  <ul id="images" class="docs-pictures clearfix">
+  </ul>
+</div>
+
+<script src="preview.js"></script>
+<script src="MyPaging.js"></script>
+<script src="script.js"></script>
+
+ <script type="application/javascript">
+        jQuery.prototype.serializeObject=function(){
+            var obj=new Object();
+            $.each(this.serializeArray(),function(index,param){
+                if(!(param.name in obj)){
+                    obj[param.name]=param.value;
+                }
+            });
+            return obj;
+        };
+        let base_uri = ''
+        function timestampToTime(timestamp) {
+            var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1):date.getMonth()+1) + '-';
+            var D = (date.getDate()< 10 ? '0'+date.getDate():date.getDate())+ ' ';
+            var h = (date.getHours() < 10 ? '0'+date.getHours():date.getHours())+ ':';
+            var m = (date.getMinutes() < 10 ? '0'+date.getMinutes():date.getMinutes()) + ':';
+            var s = date.getSeconds() < 10 ? '0'+date.getSeconds():date.getSeconds();
+            return Y+M+D+h+m+s;
+        }
+        function save_monitor(){
+            let params = $("#monitor_form").serializeObject();
+            console.log(params);
+            $.ajax({
+                url: base_uri + '/save_monitor',
+                type: 'post',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(params),
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if(data.code == 1){
+                        alert('操作成功');
+                        $('#modal_add_goods').modal('hide');
+                        reload_page_table();
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error: function (e){
+                    alert('系统内部错误！')
+                }
+            })
+        }
+
+        function list_monitors(page_ele) {
+            let page_no = page_ele.current
+            $.ajax({
+                url: base_uri + 'list_monitor',
+                type: 'get',
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if(page_ele != undefined && page_ele != null) {
+                        page_ele.setTotal(data.data.length);
+                        $('#curr_page').val(page_no)
+                        page_ele.current = page_no
+                    }
+                    renderTable(data);
+                },
+                error: function (e){
+                    alert('系统内部错误');
+                }
+            })
+        }
+
+        function renderTable(data){
+            const rows = data.data;
+            let htm = '';
+            for(let i=0; i<rows.length; i++){
+                const r = rows[i];
+                htm += '<tr>';
+                htm += '<td>'+r.create_time+'</td>';
+                htm += '<td>'+r.remarks+'</td>';
+                htm += '<td>';
+                let sizes = r.size_list;
+                htm += '<table class="table table-bordered">';
+                for(let j=0; j<sizes.length; j++){
+                    htm += '<tr><td>'+sizes[j][0]+'</td></tr>'
+                }
+                htm += '</table></td>';
+                htm += '<td>';
+                htm += '<table class="table table-bordered">';
+                for(let t=0; t<sizes.length; t++){
+                    htm += '<tr><td>'+sizes[t][1]+'</td></tr>'
+                }
+                htm += '</table>';
+                htm += '</td>';
+                htm += '<td>运行中</td>';
+                htm += '<td><a class="btn btn-primary" onclick="show_or_edit('+r.id+')">查看/编辑</a>&nbsp;&nbsp;<a class="btn btn-danger" onclick="del('+r.id+')">删除</a></td>'
+                htm += '</tr>'
+                //$('#tb').append(htm)
+            }
+            $('#tb').html(htm)
+        }
+
+        function show_or_edit(id){
+            $.ajax({
+                url: base_uri + '/monitor_detail?id='+id,
+                type: 'get',
+                success: function (data) {
+                    data = JSON.parse(data).data;
+                    $("#id").val(data.id);
+                    $("textarea[name='codes']").val(data.codes);
+                    $("input[name='price_diff']").val(data.price_diff);
+                    $("input[name='price_diff_rate']").val(data.price_diff_rate);
+                    $("input[name='d_sale_diff_day']").val(data.d_sale_diff_day);
+                    $("input[name='d_sale_diff_week']").val(data.d_sale_diff_week);
+                    $("input[name='d_price_diff_day']").val(data.d_price_diff_day);
+                    $("input[name='d_price_diff_week']").val(data.d_price_diff_week);
+                    $("input[name='s_sale_diff_day']").val(data.s_sale_diff_day);
+                    $("input[name='s_sale_diff_week']").val(data.s_sale_diff_week);
+                    $("input[name='s_price_diff_day']").val(data.s_price_diff_day);
+                    $("input[name='s_price_diff_week']").val(data.s_price_diff_week);
+                    $("input[name='monitor_frequency']").val(data.monitor_frequency);
+                    $("input[name='remarks']").val(data.remarks);
+                    $('#modal_add_goods').modal('show');
+                },
+                error: function (e){
+                    alert('系统内部错误');
+                }
+            })
+        }
+
+        function del(id){
+            if(confirm("确定删除？")){
+                $.ajax({
+                    url: base_uri + '/delete_monitor?id='+id,
+                    type: 'get',
+                    success: function (data) {
+                        data = JSON.parse(data);
+                        if(data.code==1){
+                            alert('删除成功');
+                            reload_page_table();
+                        }else{
+                            alert(data.msg);
+                        }
+                    },
+                    error: function (e){
+                        alert('系统内部错误');
+                    }
+                })
+            }
+        }
+
+        function entersearch(){
+        　　var event = window.event || arguments.callee.caller.arguments[0];
+        　　if (event.keyCode == 13)
+        　　{
+            //list_goods();
+              reload_page_table();
+        　　}
+        }
+
+        function reload_page_table(sort_name, sort_order){
+            let last_page = $('#curr_page').val()
+            let current = 1;
+            if(last_page != undefined && last_page != "" && sort_name == undefined){
+                current = last_page
+            }
+            if(sort_name == undefined){
+                sort_name = $('#curr_sort_name').val()
+                sort_order = $('#curr_sort_order').val()
+            }
+            // 初始化分页
+            $('.box2').MyPaging({
+                size: 15,
+                total: 0,
+                current: current,
+                prevHtml: '上一页',
+                nextHtml: '下一页',
+                layout: 'total, totalPage, prev, pager, next, jumper',
+                jump: function () {
+                    let _this = this;
+                    //list_goods(_this, sort_name, sort_order);
+                    list_monitors(_this);
+                    //setTbody(res.list);
+                    // 必须调用
+                    //_this.setTotal(100);
+                }
+            });
+        }
+
+
+    $(function () {
+            // $("[data-toggle='popover']").popover();
+            // list_goods()
+            reload_page_table()
+        })
+    </script>
+
+</body>
+</html>

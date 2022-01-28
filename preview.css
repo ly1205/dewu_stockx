@@ -1,0 +1,297 @@
+   .mask-layer * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.mask-layer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 202020;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.mask-layer .mask-layer-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    background: url(img/closeicon.png) no-repeat center center;
+    background-size: cover;
+    cursor: pointer;
+}
+
+.mask-layer-black {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: .75;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.mask-layer-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.mask-layer-container .small-content {
+    width: 630px;
+    height: 100px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    transform: translate(-50%);
+    -webkit-transform: translate(-50%);
+    -moz-transform: translate(-50%);
+    -ms-transform: translate(-50%);
+    -o-transform: translate(-50%);
+    bottom: 0;
+    overflow: hidden;
+}
+
+.small-content .small-img-box {
+    position: relative;
+    top: 0;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+}
+
+.small-img-box .mask-small-img {
+    width: 100px;
+    height: 100px;
+    border: 2px solid transparent;
+    margin: 0 5px 0 0;
+    opacity: 0.4;
+    cursor: pointer;
+}
+
+.small-img-box .mask-small-img.onthis {
+    border: 2px solid #1e9fff;
+    opacity: 1;
+}
+
+.small-content .box-go-left {
+    position: absolute;
+    width: 20px;
+    display: block;
+    text-align: center;
+    left: 0px;
+    bottom: 0;
+    height: 100px;
+    background: url(./img/left_img.png) no-repeat center;
+    background-size: 20px;
+    background-color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.small-content .box-go-right {
+    position: absolute;
+    width: 20px;
+    display: block;
+    text-align: center;
+    right: 0px;
+    bottom: 0;
+    height: 100px;
+    background: url(./img/right_img.png) no-repeat center;
+    background-size: 20px;
+    background-color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.small-content .box-go-left:hover,
+.small-content .box-go-right:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.8);
+    background-size: 24px;
+}
+
+.mask-layer-container .img-pre {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translate(0, -50%);
+    -webkit-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    background: url(img/prev.png) no-repeat center center;
+    cursor: pointer;
+}
+
+.mask-layer-container .img-pre:hover {
+    background: url(img/prev_h.png) no-repeat center center;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.mask-layer-container .img-next {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    border-radius: 100%;
+    cursor: pointer;
+    background: url(img/next.png) no-repeat center center;
+    right: 20px;
+    top: 50%;
+    transform: translate(0, -50%);
+    -webkit-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+}
+
+.mask-layer-container .img-next:hover {
+    background: url(img/next_h.png) no-repeat center center;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.mask-layer-container .mask-layer-imgbox {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.mask-layer-container .mask-layer-imgbox.has-small {
+    height: calc(100% - 105px);
+}
+
+.mask-layer-imgbox .mask-layer-imgName {
+    z-index: 999;
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translate(-50%);
+    -webkit-transform: translate(-50%);
+    -moz-transform: translate(-50%);
+    -ms-transform: translate(-50%);
+    -o-transform: translate(-50%);
+    height: 30px;
+    width: 630px;
+    padding: 5px;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.3);
+    transition: all linear 0.3s;
+}
+
+.mask-layer-imgbox:hover .mask-layer-imgName {
+    bottom: 0px;
+}
+
+.mask-layer-imgbox .layer-img-box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.layer-img-box>p{
+    position: absolute;
+    transform-origin: center;
+    -webkit-transform-origin: center;
+    -moz-transform-origin: center;
+    -ms-transform-origin: center;
+    -o-transform-origin: center;
+    width: 100%;
+    height: 100%;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    cursor: move;
+    left: 0;
+    top: 0;
+}
+
+.mask-layer-imgbox .layer-img-box img {
+    position: absolute;
+    max-width: 100%;
+    max-height: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
+    -moz-transform: translate(-50%, -50%) scale(1);
+    -ms-transform: translate(-50%, -50%) scale(1);
+    -o-transform: translate(-50%, -50%) scale(1);
+}
+
+.mask-layer-imgbox .layer-img-box img:hover {
+    cursor: move;
+}
+
+.zoomImg-hide-box {
+    display: none !important;
+}
+/*右键菜单*/
+.mask-layer  .contextmenu {
+    list-style: none;
+    display: none;
+    position: absolute;
+    width: 180px;
+    background: #FFFFFF;
+    border-radius: 5px;
+    z-index: 99;
+    border: 1px solid #333;
+}
+
+.mask-layer .contextmenu li {
+    transition: ease 0.3s;
+}
+
+.mask-layer .contextmenu li:hover {
+    background: #333333;
+}
+
+.mask-layer .contextmenu li>a {
+    display: block;
+    padding: 10px 10px 10px 35px;
+    color: #000000;
+    text-decoration: none;
+    transition: ease 0.3s;
+}
+.mask-layer .contextmenu li>a.clockwise{
+   background: url(img/right_rotate.png) no-repeat left 5px center;
+   background-size:24px 24px ;
+}
+.contextmenu li>a.clockwise:hover{
+   background: url(img/right_rotate_h.png) no-repeat left 5px center;
+   background-size:24px 24px ;
+}
+.mask-layer .contextmenu li>a.counterClockwise{
+   background: url(img/left_rotate.png) no-repeat left 5px center;
+   background-size:24px 24px ;
+}
+.contextmenu li>a.counterClockwise:hover{
+   background: url(img/left_rotate_h.png) no-repeat left 5px center;
+   background-size:24px 24px ;
+}
+.mask-layer .contextmenu li>a.downimg{
+   background: url(img/down.png) no-repeat left 5px center;
+   background-size:24px 24px ;
+}
+.contextmenu li>a.downimg:hover{
+   background: url(img/down_h.png) no-repeat left 5px center;
+   background-size:24px 24px ;
+}
+
+
+
+.mask-layer .contextmenu li:hover>a {
+    color: #FFFFFF;
+}
+.mask-layer .contextmenu .menu-parend:hover .menu-child {
+    display: block;
+}

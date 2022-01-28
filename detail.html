@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>du_stx</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="preview.css" >
+    <link rel="stylesheet" type="text/css" href="MyPaging.css">
+
+
+	<script src="jquery.min.js"></script>
+	<!-- <script src="echarts.min.js"></script> -->
+	<script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+    <style>
+        .table{
+            table-layout: fixed;
+        }
+        td {
+            width: 160px;
+        }
+    </style>
+
+</head>
+<body style="padding-left: 30px; padding-right: 30px; padding-top:30px; padding-bottom: 100px">
+
+
+<form class="form-inline" onkeydown="entersearch()" role="form" style="margin-bottom:5px">
+</form>
+<div style="width: 70%">
+    <table class="table table-hover table-bordered">
+        <caption>基础信息</caption>
+        <tbody id="tb">
+        </tbody>
+    </table>
+    <div class="box2"></div>
+</div>
+
+<div style="width: 1000px">
+    <table class="table table-hover table-bordered" width="1000px">
+        <caption>价格列表</caption>
+        <tbody id="tb2">
+        </tbody>
+    </table>
+</div>
+
+<div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
+    <div id="innerdiv" style="position:absolute;">
+        <img id="bigimg" style="border:5px solid #fff;" src="" />
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal_sell_report" tabindex="-1" role="dialog" aria-labelledby="myModalLabel4" aria-hidden="true" >
+	<div class="modal-dialog" style="width: 900px">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel2">
+                    均价销量曲线<span id="report_title"></span>
+				</h4>
+			</div>
+			<div class="modal-body">
+                <form class="form-inline"  role="form" style="margin-bottom:5px">
+                    <input type="hidden" id="cur_code">
+                    <input type="hidden" id="cur_size">
+                    <div class="form-group">
+                        <label class="sr-only" for="level">时间</label>
+                          <select type="text" class="form-control" id="day_num" onchange="view_sale_report()">
+                              <option value="3">近3天</option>
+                              <option value="7">近7天</option>
+                              <option value="15">近15天</option>
+                              <option value="30">近30天</option>
+                              <option value="60">近60天</option>
+                              <option value="90">近90天</option>
+                          </select>
+                    </div>
+                </form>
+				<div id="sale_chart" style="width: 800px;height:400px;">
+
+                </div>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+
+<script src="preview.js"></script>
+<script src="MyPaging.js"></script>
+<script src="script.js"></script>
+
+ <script type="application/javascript">
+        let base_uri = ''
+        function timestampToTime(timestamp) {
+            var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1):date.getMonth()+1) + '-';
+            var D = (date.getDate()< 10 ? '0'+date.getDate():date.getDate())+ ' ';
+            var h = (date.getHours() < 10 ? '0'+date.getHours():date.getHours())+ ':';
+            var m = (date.getMinutes() < 10 ? '0'+date.getMinutes():date.getMinutes()) + ':';
+            var s = date.getSeconds() < 10 ? '0'+date.getSeconds():date.getSeconds();
+            return Y+M+D+h+m+s;
+        }
+
+        function get_base_info(goods_code) {
+            $.ajax({
+                url: base_uri + 'get_base_info?goods_code='+goods_code,
+                type: 'get',
+                success: function (data) {
+                    renderTable(data);
+                },
+                error: function (e){
+                    alert('系统内部错误');
+                }
+            })
+        }
+
+        function get_sku_price_list(goods_code) {
+            $.ajax({
+                url: base_uri + 'get_sku_price_list?code='+goods_code,
+                type: 'get',
+                success: function (data) {
+                    render_sku_price_table(data.data);
+                },
+                error: function (e){
+                    alert('系统内部错误');
+                }
+            })
+        }
+
+        function view_sale_report(code, size){
+            let day_num = $("#day_num").val();
+            if(code){
+                $("#cur_code").val(code);
+            }else{
+                code = $("#cur_code").val();
+            }
+            if(size){
+                $("#cur_size").val(size);
+            }else{
+                size = $("#cur_size").val();
+            }
+            $("#report_title").html("（货号:"+code+", 尺码："+size+"）");
+            $.ajax({
+                url: base_uri + 'get_sale_report?code='+code+'&size='+size+'&day_num='+day_num,
+                type: 'get',
+                success: function (data) {
+                    console.log(data);
+                    let d = JSON.parse(data);
+                    if(d.code == 1){
+                        d = d.data;
+                        init_sale_charts(d.date_list, d.du_sales, d.stx_sales, d.du_prices, d.stx_prices);
+                        $('#modal_sell_report').modal('show');
+                    }else{
+                        alert('获取趋势图失败');
+                    }
+                },
+                error: function (e){
+                    alert('系统内部错误');
+                }
+            })
+        }
+
+        function render_sku_price_table(data){
+            // 第一行(尺码)
+            let htm = '<tr>';
+            for(let i=0; i<data.length; i++){
+                let row = data[i];
+                htm += '<td colspan="2">'+row.sku_name+'</td>';
+            }
+            htm += '</tr>';
+            // 第二行(stx普通购买价，普通出售到手价)
+            htm += '<tr>';
+            for(let i=0; i<data.length; i++){
+                let row = data[i];
+                htm += '<td colspan="2" style="color: green;">'+row.price_buy+'&nbsp;&nbsp;&nbsp; &nbsp;'+row.sell_get_price+'</td>';
+            }
+            htm += '</tr>';
+            // 第三行（stx变现购买，变现到手）
+            htm += '<tr>';
+            for(let i=0; i<data.length; i++){
+                let row = data[i];
+                htm += '<td colspan="2" style="color: green; ">变现$:'  + row.price_sell + '&nbsp;&nbsp;&nbsp; &nbsp;'+row.want_get_price+'</td>';
+            }
+            htm += '</tr>';
+            // 新增一行，stx购买到手价
+            htm += '<tr>';
+            for(let i=0; i<data.length; i++){
+                let row = data[i];
+                htm += '<td colspan="2" style="color: green; ">购买到手$:'  + row.price_buy_get+'</td>';
+            }
+            htm += '</tr>';
+            //第四行（du普通购买，普通到手）
+            htm += '<tr>';
+            for(let i=0; i<data.length; i++){
+                let row = data[i];
+                htm += '<td colspan="2">' + row.price_normal + '&nbsp;&nbsp;&nbsp;&nbsp;'+row.price_normal_get+'</td>';
+            }
+            htm += '</tr>';
+            // 第五行（du闪电购买，闪电到手）
+            htm += '<tr>';
+            for(let i=0; i<data.length; i++){
+                let row = data[i];
+                htm += '<td colspan="2">闪' + row.price_shan+ '&nbsp;&nbsp;&nbsp;&nbsp;  '+row.price_shan_get+'</td>';
+            }
+            htm += '</tr>';
+            // 第六行(du极速购买，到手)
+            htm += '<tr>';
+            for(let i=0; i<data.length; i++){
+                let row = data[i];
+                htm += '<td colspan="2">极' + row.price_ji + '&nbsp;&nbsp;&nbsp;&nbsp; '+row.price_ji_get+'</td>';
+            }
+            htm += '</tr>';
+            // 第7行(du变现，到手)
+            htm += '<tr>';
+            for(let i=0; i<data.length; i++){
+                let row = data[i];
+                htm += '<td colspan="2">变现' + row.price_want + '&nbsp;&nbsp;&nbsp;&nbsp;'+row.price_want_get+'</td>';
+            }
+            htm += '</tr>';
+            // 第8行(港邮)
+            htm += '<tr>';
+            for(let i=0; i<data.length; i++){
+                let row = data[i];
+                htm += '<td colspan="2">港直'+row.price_oversea+'&nbsp;&nbsp;&nbsp;&nbsp; ¥ /</td>';
+            }
+            htm += '</tr>';
+            // 第9行(走势)
+            htm += '<tr>';
+            for(let i=0; i<data.length; i++){
+                let row = data[i];
+                htm += '<td colspan="2"><a class="btn btn-default" onclick="view_sale_report(\''+row.code+'\',\''+row.sku_name+'\');">查看走势</a></td>';
+            }
+            htm += '</tr>';
+             // 第10行(差价)
+            htm += '<tr>';
+            for(let i=0; i<data.length; i++){
+                let row = data[i];
+                htm += '<td>差价</td>';
+                if(row[price_col_du] != '/' && row[price_col_stx] != '/'){
+                    let _price_diff =  parseFloat(row[price_col_stx]) - parseFloat(row[price_col_du]);
+                    _price_diff = _price_diff.toFixed(2);
+                    if(_price_diff >= parseFloat(target_price_diff)){
+                        htm += '<td style="color: red">'+_price_diff+'</td>';
+                    }else{
+                        htm += '<td>'+_price_diff+'</td>';
+                    }
+                }else{
+                    htm += '<td>/</td>';
+                }
+            }
+            htm += '</tr>';
+             // 第10行(差价率)
+            htm += '<tr>';
+            for(let i=0; i<data.length; i++){
+                let row = data[i];
+                htm += '<td>差价率</td>';
+                if(row[price_col_du] != '/' && row[price_col_stx] != '/'){
+                    let _price_diff_rate
+                    if('stx'==price_diff_rate_divider) {
+                        _price_diff_rate = (parseFloat(row[price_col_stx]) - parseFloat(row[price_col_du])) / parseFloat(row[price_col_stx]);
+                    }else{
+                        _price_diff_rate = (parseFloat(row[price_col_stx]) - parseFloat(row[price_col_du])) / parseFloat(row[price_col_du]);
+                    }
+                    _price_diff_rate = (_price_diff_rate*100).toFixed(2);
+                    if(_price_diff_rate > target_price_diff_rate){
+                        htm += '<td <td style="color: red">'+_price_diff_rate+'%</td>';
+                    }else{
+                        htm += '<td>'+_price_diff_rate+'%</td>';
+                    }
+                }else{
+                    htm += '<td>/</td>';
+                }
+            }
+            htm += '</tr>';
+            $('#tb2').html(htm);
+        }
+
+
+        function renderTable(_data){
+            let data = _data.data;
+            let htm = '';
+            htm += '<tr><td>货号</td><td colspan="3">'+goods_code+'</td></tr>'
+            htm += '<tr><td>得物货名</td><td>'+data[0]+'</td><td>stockx货名</td><td>'+data[6]+'</td></tr>'
+            htm += '<tr><td>发售日期</td><td>'+data[1]+'</td><td>发售日期</td><td>'+data[7]+'</td></tr>'
+            htm += '<tr><td>发售价</td><td>¥'+data[2]+'</td><td>发售价</td><td>$'+data[8]+'</td></tr>'
+            {#htm += '<tr><td></td><td></td><td></td><td></td></tr>'#}
+            htm += '<tr><td>总销量</td><td>'+data[3]+'</td><td>总销量</td><td>'+data[9]+'</td></tr>'
+            htm += '<tr><td>近3天销量</td><td>'+data[4]+'</td><td>近3天销量</td><td>'+data[10]+'</td></tr>'
+            htm += '<tr><td>近7天销量</td><td>'+data[5]+'</td><td>近7天销量</td><td>'+data[11]+'</td></tr>'
+            $('#tb').html(htm)
+        }
+
+        function init_sale_charts(days, du_sales, stx_sales, du_prices, stx_prices){
+            console.log('days:', days);
+            console.log('du_sales: ', du_sales);
+            var chartDom = document.getElementById('sale_chart');
+            var myChart = echarts.init(chartDom);
+            var option;
+            option = {
+              tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                  type: 'cross',
+                  crossStyle: {
+                    color: '#999'
+                  }
+                }
+              },
+              toolbox: {
+                feature: {
+                  dataView: { show: true, readOnly: false },
+                  magicType: { show: true, type: ['line', 'bar'] },
+                  restore: { show: true },
+                  saveAsImage: { show: true }
+                }
+              },
+              legend: {
+                data: ['du销量', 'stx销量', 'du均价', 'stx均价']
+              },
+              xAxis: [
+                {
+                  type: 'category',
+                  //data: ['11/20', '11/21', '11/22', '11/23', '11/24', '11/25', '11/26', '11/27', '11/28', '11/29', '11/30', '12/01'],
+                  data: days,
+                  axisPointer: {
+                    type: 'shadow'
+                  }
+                }
+              ],
+              yAxis: [
+                {
+                  type: 'value',
+                  name: '销量',
+                  axisLabel: {
+                    formatter: '{value}'
+                  }
+                },
+                {
+                  type: 'value',
+                  name: '均价',
+                  axisLabel: {
+                    formatter: '{value} '
+                  }
+                }
+              ],
+              series: [
+                {
+                  name: 'du销量',
+                  type: 'bar',
+                  //data: [2.0, 4.9, 97, 23.2, 25.6, 76.7, 60.6, 80.2, 32.6, 100, 6.4, 3.3]
+                  data: du_sales
+                },
+                {
+                  name: 'stx销量',
+                  type: 'bar',
+                  data: stx_sales
+                  //data: [2.6, 5.9, 9.0, 26.4, 50, 70.7, 12.6, 70.2, 48.7, 18.8, 99, 2.3]
+                },
+                {
+                  name: 'du均价',
+                  type: 'line',
+                  yAxisIndex: 1,
+                  data: du_prices
+                  //data: [2.0, 2.2, 3.3, 86, 1600, 10.2, 20.3, 23.4, 888, 16.5, 12.0, 6.2]
+                },
+                  {
+                  name: 'stx均价',
+                  type: 'line',
+                  yAxisIndex: 1,
+                  data: stx_prices
+                  //data: [3.0, 1.0, 2.1, 999, 5.3, 10.2, 30, 23.4, 769, 19, 1200.0, 6.2]
+                }
+              ]
+            };
+            option && myChart.setOption(option);
+            console.log('======初始化图表成功');
+        }
+
+        let goods_code = '';
+        let target_price_diff = '';
+        let target_price_diff_rate = '';
+        let price_col_stx = '';
+        let price_col_du = '';
+        let price_diff_rate_divider = '';
+
+
+        $(function () {
+            //setTimeout(initTableCheckboxEvent, 1000)
+            //setTimeout(initTableCheckbox, 1000)
+            // setInterval(list_goods, 20*1000)
+            //setInterval(reload_page, 30*1000)
+            //init_sale_charts();
+            var query = window.location.search.substring(1);
+            //goods_code = query.replace('goods_code=', '');
+            let args = query.split("&");
+            let argsMap = {};
+            for(let i=0; i<args.length; i++){
+                let arg = args[i].split('=');
+                argsMap[arg[0]] = arg[1];
+            }
+            goods_code = argsMap['goods_code'];
+            target_price_diff = argsMap['price_diff'];
+            target_price_diff_rate = argsMap['price_diff_rate']
+            price_col_stx = argsMap['price_col_stx']
+            price_col_du = argsMap['price_col_du']
+            price_diff_rate_divider = argsMap['price_diff_rate_divider']
+            console.log('price_col_du: ', price_col_du)
+            get_base_info(argsMap['goods_code']);
+            get_sku_price_list(argsMap['goods_code']);
+
+        })
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>du_stx</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="preview.css" >
+    <link rel="stylesheet" type="text/css" href="MyPaging.css">
+
+
+	<script src="jquery.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+
+
+</head>
+<body style="padding-left: 30px; padding-right: 30px; padding-top:30px; padding-bottom: 100px">
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">首页</a>
+    </div>
+    <div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">SKU查询</a></li>
+            <li><a href="calculator.html">批发计算器</a></li>
+            <li><a href="config.html">设置</a></li>
+        </ul>
+    </div>
+    </div>
+</nav>
+
+<table>
+    <tr>
+         <td>
+            <form class="form" role="form" style="margin-bottom:5px">
+                 <div class="form-group">
+                     <label for="name">DU</label>
+                     <label class="radio">
+                        <input type="radio" id="tagCheckbox1" name="du_price" value="" checked> 全部
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox1" name="du_price" value="price_normal"> 普通购买价
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox2" name="du_price" value="price_normal_get">  普通出售到手价
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox3" name="du_price" value="price_shan"> 闪电购买价
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox3" name="du_price" value="price_shan_get"> 闪电出售到手价
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox3" name="du_price" value="price_ji"> 极速购买价
+                    </label>
+                     <label class="radio">
+                        <input type="radio" id="tagCheckbox3" name="du_price" value="price_ji_get"> 极速出售到手价
+                    </label>
+                      <label class="radio">
+                        <input type="radio" id="tagCheckbox3" name="du_price" value="price_oversea"> 其他跨境购买价
+                    </label>
+                </div>
+            </form>
+        </td>
+        <td>
+            <form class="form" role="form" style="margin-bottom:5px">
+                 <div class="form-group">
+                     <label for="name">STOCKX</label>
+                     <label class="radio">
+                        <input type="radio" id="tagCheckbox1" name="stx_price" value="" checked> 全部
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox1" name="stx_price" value="price_buy"> S普通购买价
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox2" name="stx_price" value="price_buy_get"> S普通购买到手价
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox3" name="stx_price" value="sell_get_price"> S普通出售到手价
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox3" name="stx_price" value="price_sell"> S变现出售价
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox3" name="stx_price" value="want_get_price"> S变现出售到手价
+                    </label>
+                </div>
+            </form>
+        </td>
+        <td>
+            <form class="form" role="form" style="margin-bottom:5px">
+                 <div class="form-group">
+                     <label for="name">STOCKX地区</label>
+                     <label class="radio">
+                        <input type="radio" id="tagCheckbox1" name="stx_location" value="" checked> 全部
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox1" name="stx_location" value="us"> US
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox2" name="stx_location" value="gb"> GB
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox3" name="stx_location" value="hk"> HK
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox3" name="stx_location" value="hk"> SG
+                    </label>
+                    <label class="radio">
+                        <input type="radio" id="tagCheckbox3" name="stx_location" value="my"> MY
+                    </label>
+                     <label class="radio">
+                        <input type="radio" id="tagCheckbox3" name="stx_location" value="au"> AU
+                    </label>
+                      <label class="radio">
+                        <input type="radio" id="tagCheckbox3" name="stx_location" value="ca"> CA
+                    </label>
+                       <label class="radio">
+                        <input type="radio" id="tagCheckbox3" name="stx_price" value="jp"> JP
+                    </label>
+                </div>
+            </form>
+        </td>
+
+    </tr>
+    <tr>
+        <td colspan="3">
+            <form class="form-inline" onkeydown="entersearch()" role="form" style="margin-bottom:5px">
+                <div class="form-group">
+                  <span class="form-control btn btn-warning" onclick="showAddCodes();">添加货号</span>
+                </div>
+                 <div class="form-group">
+                  <span class="form-control btn btn-info" onclick="$('#modal_add_category').modal('show')">添加组别</span>
+                </div>
+                <!--<div class="form-group">
+                  <a class="form-control btn btn-default" href="monitor.html" target="_blank">监控提醒</a>
+                </div>-->
+                <div class="form-group">
+                  <label class="sr-only" for="bargain_user">差价</label>
+                  <input type="number" class="form-control" id="price_diff" placeholder="差价" style="width: 100px"/>
+              </div>
+                <div class="form-group">
+                  <label class="sr-only" for="issue_key_words">差价率(%)</label>
+                  <input type="number" class="form-control" id="price_diff_rate" placeholder="差价率" style="width: 100px"/>%
+              </div>
+                <div class="form-group">
+                  <label class="" for="price_diff_rate_divider">差价率除数</label>
+                    <select class="form-control" id="price_diff_rate_divider">
+                        <option value="stx">stockx</option>
+                        <option value="du">得物</option>
+                    </select>
+              </div>
+
+              <div class="form-group">
+                  <label class="" for="spider_date_du">DU更新时间</label>
+                  <input type="date" class="form-control" id="spider_date_du" style="width: 130px"/>
+              </div>
+              <div class="form-group">
+                  <label class="" for="spider_date_du">STX更新时间</label>
+                  <input type="date" class="form-control" id="spider_date_stx" style="width: 130px"/>
+              </div>
+                <div class="form-group">
+                  <!--<label class="" for="price_diff_rate_divider">组别</label>-->
+                    <select class="form-control" id="search_cate_slk">
+                    </select>
+              </div>
+
+              <button type="button" class="btn btn-primary" onclick="reload_page_table();">搜索</button>
+              <button type="button" class="btn btn-primary" onclick="spider_checked_rows();">刷新选中行</button>
+              <button type="button" class="btn btn-danger" onclick="delAll();">一键清除</button>
+                </br>
+                <div class="form-group">
+                    <span id="task_status" style="color: red"> </span>
+              </div>
+            </form>
+        </td>
+    </tr>
+</table>
+<div>
+<div>
+    <input type="hidden" id="curr_page"/>
+    <input type="hidden" id="curr_sort_name"/>
+    <input type="hidden" id="curr_sort_order"/>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th><input type="checkbox" id="checkAll" name="checkAll" /></th>
+                <th>组别</th>
+                <th>货号</th>
+                <th>鞋名</th>
+                <th>尺码</th>
+                <th>创建时间</th>
+                <th>du更新时间</th>
+                <th>stx更新时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="tb">
+        </tbody>
+    </table>
+    <div class="box2"></div>
+</div>
+</div>
+
+<div class="modal fade" id="modal_add_goods" tabindex="-1" role="dialog" aria-labelledby="myModalLabel4" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel2">
+					添加商品货号
+				</h4>
+			</div>
+			<div class="modal-body">
+                <div class="form-group">
+                    <!-- <input class="form-control" id="category" rows="10" placeholder="请输入组别"></input> -->
+                    <select class="form-control" id="slk_category" onchange="getCodesByCate(this.value)"></select>
+                    <a class="btn btn-danger btn-sm" style="margin-top:2px" onclick="deleteCategory()">删除组别</a>
+                </div>
+				<div class="form-group">
+                    <textarea class="form-control" id="codes" rows="10" placeholder="请输入商品货号，一行一个"></textarea>
+                </div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+				<button type="button" class="btn btn-primary" onclick="post_codes()">
+					提交
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+
+<div class="modal fade" id="modal_add_category" tabindex="-1" role="dialog" aria-labelledby="myModalLabel4" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel2">
+					添加组别
+				</h4>
+			</div>
+			<div class="modal-body">
+                <div class="form-group">
+                    <input class="form-control" id="category" rows="10" placeholder="请输入组别"></input>
+                </div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+				<button type="button" class="btn btn-primary" onclick="save_category()">
+					保存
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+
+
+<div class="modal fade" id="modal_invalid_goods" tabindex="-1" role="dialog" aria-labelledby="myModalLabel4" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel2">
+					无效商品货号
+				</h4>
+			</div>
+			<div class="modal-body">
+                <table class="table table-hover" id="invalid_code_table">
+                </table>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+
+
+
+<div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
+    <div id="innerdiv" style="position:absolute;">
+        <img id="bigimg" style="border:5px solid #fff;" src="" />
+    </div>
+</div>
+
+<div class="modal fade" id="loadingModal" backdrop="static" keyboard="false">
+    　　<div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
+    　　　　 <h3 id="loadText">正在更新，请稍后...</h3>
+            <div class="progress progress-striped active" style="margin-bottom: 0;">
+                <div class="progress-bar" style="width: 100%;"></div>
+            </div>
+    　　</div>
+</div>
+
+<div>
+  <ul id="images" class="docs-pictures clearfix">
+  </ul>
+</div>
+
+<script src="preview.js"></script>
+<script src="MyPaging.js"></script>
+<script src="script.js"></script>
+
+ <script type="application/javascript">
+        let base_uri = ''
+        function timestampToTime(timestamp) {
+            var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1):date.getMonth()+1) + '-';
+            var D = (date.getDate()< 10 ? '0'+date.getDate():date.getDate())+ ' ';
+            var h = (date.getHours() < 10 ? '0'+date.getHours():date.getHours())+ ':';
+            var m = (date.getMinutes() < 10 ? '0'+date.getMinutes():date.getMinutes()) + ':';
+            var s = date.getSeconds() < 10 ? '0'+date.getSeconds():date.getSeconds();
+            return Y+M+D+h+m+s;
+        }
+        function post_codes(){
+            if(!$('#codes').val()){
+                alert('请输入货号');
+                return;
+            }
+            $.ajax({
+                url: base_uri + 'post_goods_codes',
+                type: 'post',
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify({'codes': $('#codes').val().split('\n'), 'category': $('#slk_category').val()}),
+                success: function (data) {
+                    if(data.code == 1){
+                        alert('成功导入'+data.data + '个货号');
+                        $('#modal_add_goods').modal('hide')
+                        window.location.refresh();
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error: function (e){
+                    alert('系统内部错误！')
+                }
+            })
+        }
+
+        function list_goods(page_ele, sort_name, sort_order) {
+            let page_no = page_ele.current
+            sort_name = sort_name == undefined ? '' : sort_name
+            sort_order = sort_order == undefined ? '': sort_order
+            let stx_price = $("input[name='stx_price']:checked").val();
+            let stx_location = $("input[name='stx_location']:checked").val();
+            let du_price = $("input[name='du_price']:checked").val();
+            let price_diff = $("#price_diff").val();
+            let price_diff_rate = $("#price_diff_rate").val();
+            let spider_date_du = $("#spider_date_du").val();
+            let spider_date_stx = $("#spider_date_stx").val();
+            let price_diff_rate_divider = $("#price_diff_rate_divider").val();
+            let search_cate = $("#search_cate_slk").val();
+            if((price_diff || price_diff_rate) && (du_price == '' && stx_price == '')){
+                alert('请选择差价或差价率要对比的价格字段!!');
+                return;
+            }
+            $.ajax({
+                url: base_uri + 'list_codes?page_no='+page_no+'&stx_price='+stx_price+'&stx_location='+stx_location+'&du_price='+du_price+'&price_diff='+price_diff+'&price_diff_rate='+price_diff_rate+'&spider_date_stx='+spider_date_stx+'&spider_date_du='+spider_date_du+'&price_diff_rate_divider='+price_diff_rate_divider+'&search_cate='+search_cate,
+                type: 'get',
+                success: function (data) {
+                    if(page_ele != undefined && page_ele != null) {
+                        page_ele.setTotal(data.total_count);
+                        $('#curr_page').val(page_no)
+                        if(sort_name != ''){
+                            $('#curr_sort_name').val(sort_name)
+                            $('#curr_sort_order').val(sort_order)
+                        }
+                        page_ele.current = page_no
+                    }
+                    renderTable(data);
+                    taskStatus(search_cate);
+                    //initTableCheckboxEvent();
+                    setTimeout(initTableCheckboxEvent, 2000)
+                },
+                error: function (e){
+                    alert('系统内部错误');
+                }
+            })
+        }
+
+        function renderTable(data){
+            const rows = data.data;
+            let htm = '';
+            let stx_price = $("input[name='stx_price']:checked").val();
+            let stx_location = $("input[name='stx_location']:checked").val();
+            let du_price = $("input[name='du_price']:checked").val();
+            let price_diff = $("#price_diff").val();
+            let price_diff_rate = $("#price_diff_rate").val();
+            let price_diff_rate_divider = $("#price_diff_rate_divider").val();
+            for(let i=0; i<rows.length; i++){
+                const r = rows[i];
+                console.log(r);
+                htm += '<tr>';
+                htm += '<td><input class="checkbox-goods" name="row_goods_code" type="checkbox" value="'+r[0]+'"></td>';
+                htm += '<td>'+(r[7] == '' ? '默认' : r[7])+'</td>';
+                htm += '<td>'+r[0]+'</td>';
+                htm += '<td>'+r[1]+'</td>';
+                htm += '<td>'+r[2]+'</td>';
+                htm += '<td>'+r[3]+'</td>';
+                htm += '<td>'+r[5]+'</td>';
+                htm += '<td>'+r[6]+'</td>';
+                htm += '<td><a class="btn btn-default" href="detail?goods_code='+r[0]+'&price_col_stx='+stx_price+'&price_col_du='+du_price+'&price_diff='+price_diff+'&price_diff_rate='+price_diff_rate+'&price_diff_rate_divider='+price_diff_rate_divider+'" target="_blank">详情</a></td>'
+                htm += '</tr>'
+                //$('#tb').append(htm)
+            }
+            $('#tb').html(htm)
+        }
+
+        function entersearch(){
+        　　var event = window.event || arguments.callee.caller.arguments[0];
+        　　if (event.keyCode == 13)
+        　　{
+            //list_goods();
+              reload_page_table();
+        　　}
+        }
+
+        function reload_page_table(sort_name, sort_order){
+            let last_page = $('#curr_page').val()
+            let current = 1;
+            if(last_page != undefined && last_page != "" && sort_name == undefined){
+                current = last_page
+            }
+            if(sort_name == undefined){
+                sort_name = $('#curr_sort_name').val()
+                sort_order = $('#curr_sort_order').val()
+            }
+            // 初始化分页
+            $('.box2').MyPaging({
+                size: 15,
+                total: 0,
+                current: current,
+                prevHtml: '上一页',
+                nextHtml: '下一页',
+                layout: 'total, totalPage, prev, pager, next, jumper',
+                jump: function () {
+                    let _this = this;
+                    list_goods(_this, sort_name, sort_order);
+                    //setTbody(res.list);
+                    // 必须调用
+                    //_this.setTotal(100);
+                }
+            });
+        }
+
+         function spider_checked_rows(){
+            let slked_codes = [];
+            $("input:checkbox[name='row_goods_code']:checked").each(function(i){
+                slked_codes.push($(this).val())
+            });
+            if(slked_codes.length <= 0){
+                alert('请选择要更新的行！！');
+                return;
+            }
+            showLoading('更新中请稍后...');
+            $.ajax({
+                url: base_uri + 'spider_real_time',
+                type: 'post',
+                data: {'codes': slked_codes.join(',')},
+                success: function (data) {
+                    if(data.code == 1){
+                        //let s = data.data;
+                        alert(data.msg);
+                        reload_page_table();
+                    }else{
+                        alert(data.msg);
+                    }
+                    hideLoading();
+                },
+                error: function (e){
+                    alert('系统内部错误！');
+                    hideLoading();
+                }
+            })
+        }
+
+        function delAll() {
+            if(!confirm("确认要删除所有货号吗？")){
+                return;
+            }
+            $.ajax({
+                url: base_uri + 'del_all',
+                type: 'get',
+                success: function (data) {
+                    if(data.code == 1){
+                        alert('操作成功');
+                        //reload_page_table();
+                        window.location.reload();
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error: function (e){
+                    alert('系统内部错误！')
+                }
+            })
+        }
+
+        function deleteCategory() {
+            let curCate = $("#slk_category").val();
+            if(!curCate){
+                alert('请选择组别！');
+                return;
+            }
+            let curCodes = $("#codes").val();
+            //let codesSize = curCodes.split('\n').length;
+            if(confirm('确定要删除当前组别且其下面的货号？')){
+                    $.ajax({
+                    url: base_uri + 'delete_cate_and_codes?name='+curCate,
+                    type: 'get',
+                    success: function (data) {
+                        if(data.code == 1){
+                            alert('删除成功');
+                            $("#modal_add_goods").modal('hide');
+                        }else{
+                            alert(data.msg);
+                        }
+                    },
+                    error: function (e){
+                        alert('系统内部错误！')
+                    }
+                })
+            }
+        }
+
+        function save_category() {
+            let cate = $('#category').val();
+            if(!cate){
+                alert('组别不能为空');
+                return;
+            }
+            $.ajax({
+                url: base_uri + 'save_category?name='+cate,
+                type: 'get',
+                success: function (data) {
+                    if(data.code == 1){
+                        alert('保存成功');
+                        //reload_page_table();
+                        $("#modal_add_category").modal('hide');
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error: function (e){
+                    alert('系统内部错误！')
+                }
+            })
+        }
+
+        function getCodesByCate(cate_name) {
+            $.ajax({
+                url: base_uri + 'get_codes_by_cate?name='+cate_name,
+                type: 'get',
+                success: function (data) {
+                    if(data.code == 1){
+                        let rows = data.data;
+                        let codes = [];
+                        for(let i=0; i<rows.length; i++){
+                            //codes += ','+rows[i].goods_code
+                            codes.push(rows[i].goods_code);
+                        }
+                        $("#codes").val(codes.join('\n'));
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error: function (e){
+                    alert('系统内部错误！')
+                }
+            })
+        }
+
+        function showAddCodes(search) {
+            $.ajax({
+                url: base_uri + 'list_category',
+                type: 'get',
+                success: function (data) {
+                    if(data.code == 1){
+                        //reload_page_table();
+                        let rows = data.data;
+                        let htm = '<option value="">请选择组别</option>';
+                        for(let i=0; i<rows.length; i++){
+                            let row = rows[i];
+                            htm += '<option value="'+row.name+'">'+row.name+'</option>'
+                        }
+                        if(!search) {
+                            $('#slk_category').html(htm);
+                            $('#modal_add_goods').modal('show')
+                        }else{
+                            $('#search_cate_slk').html(htm);
+                        }
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error: function (e){
+                    alert('系统内部错误！')
+                }
+            })
+        }
+
+
+        function taskStatus(search_cate){
+            $.ajax({
+                url: base_uri + 'select_task_status?search_cate='+search_cate,
+                type: 'get',
+                success: function (data) {
+                    if(data.code == 1){
+                        let s = data.data;
+                        $("#task_status").html('共：'+s.total + '个货号; <a class="btn btn-sm btn-default" onclick="showInvalid()">' + s.invalid_count
+                            + ' 个无效</a>；已完成：'+s.finish_count + ';剩余：'+s.remain_count)
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error: function (e){
+                    //alert('系统内部错误！')
+                }
+            })
+        }
+
+        function showInvalid(){
+            $.ajax({
+                url: base_uri + 'select_task_code_detail?task_type=invalid',
+                type: 'get',
+                success: function (data) {
+                    if(data.code == 1){
+                        let s = data.data;
+                        let invalid_du = s.invalid_du.join(',');
+                        let invalid_stx = s.invalid_stx.join(',');
+                        let htm = '';
+                        htm += '<tr><td>DU('+s.invalid_du.length+'个)</td><td>'+invalid_du+'</td><tr>';
+                        htm += '<tr><td>STX('+s.invalid_stx.length+'个)</td><td>'+invalid_stx+'</td><tr>';
+                        $("#invalid_code_table").html(htm);
+                        $("#modal_invalid_goods").modal("show");
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error: function (e){
+                    //alert('系统内部错误！')
+                }
+            })
+        }
+
+        function initTableCheckboxEvent() {
+            var $thr = $('table thead tr');
+            /*“全选/反选”复选框*/
+            var $checkAll = $thr.find('input[type="checkbox"]');
+            $checkAll.click(function(event){
+                /*将所有行的选中状态设成全选框的选中状态*/
+                $tbr.find('input[type="checkbox"]').prop('checked',$(this).prop('checked'));
+                /*并调整所有选中行的CSS样式*/
+                if ($(this).prop('checked')) {
+                    $tbr.find('input[type="checkbox"]').parent().parent().addClass('warning');
+                } else{
+                    $tbr.find('input[type="checkbox"]').parent().parent().removeClass('warning');
+                }
+                /*阻止向上冒泡，以防再次触发点击操作*/
+                event.stopPropagation();
+            });
+            /*点击全选框所在单元格时也触发全选框的点击操作*/
+            $('#checkAll').click(function(){
+                $(this).find('input[type="checkbox"]').click();
+            });
+            var $tbr = $('table tbody tr');
+            /*点击每一行的选中复选框时*/
+            $tbr.find('input[type="checkbox"]').click(function(event){
+                /*调整选中行的CSS样式*/
+                $(this).parent().parent().toggleClass('warning');
+                /*如果已经被选中行的行数等于表格的数据行数，将全选框设为选中状态，否则设为未选中状态*/
+                $checkAll.prop('checked',$tbr.find('input:checked').length == $tbr.length ? true : false);
+                /*阻止向上冒泡，以防再次触发点击操作*/
+                event.stopPropagation();
+            });
+        }
+
+        function showLoading(loadText) {
+            if(loadText){
+                $("#loadText").html(loadText)
+            }
+            //$('#loadingModal').modal({backdrop: 'static', keyboard: false});
+            $('#loadingModal').modal('show');
+        }
+        function hideLoading() {
+            $('#loadingModal').modal('hide');
+        }
+
+    $(function () {
+            // $("[data-toggle='popover']").popover();
+            // list_goods()
+            //initTableCheckboxEvent()
+            reload_page_table()
+            //setTimeout(initTableCheckboxEvent, 1000)
+            //setTimeout(initTableCheckbox, 1000)
+            // setInterval(list_goods, 20*1000)
+            //setInterval(reload_page, 30*1000)
+            //$('#btn-changeuser').html('当前操作人：'+cur_user + '(点击修改)')
+            //taskStatus();
+            showAddCodes(true);
+            // initTableCheckboxEvent();
+            //setTimeout(initTableCheckboxEvent, 2000)
+            //setInterval(taskStatus, 10000);
+            //setTimeout(window.location.reload, 5000)
+        })
+    </script>
+
+</body>
+</html>

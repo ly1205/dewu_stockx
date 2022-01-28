@@ -1,0 +1,16 @@
+2022-01-10 18:01:12,503 - MainThread - WARNING -  * Debugger is active!
+2022-01-10 18:01:12,505 - MainThread - INFO -  * Debugger PIN: 336-963-275
+2022-01-10 18:01:12,525 - Thread-1 - INFO -  * Running on http://0.0.0.0:18866/ (Press CTRL+C to quit)
+2022-01-10 18:01:22,136 - Thread-6 - INFO - 127.0.0.1 - - [10/Jan/2022 18:01:22] "[37mGET / HTTP/1.1[0m" 200 -
+2022-01-10 18:01:22,178 - Thread-7 - INFO - 127.0.0.1 - - [10/Jan/2022 18:01:22] "[37mGET /bootstrap.min.css HTTP/1.1[0m" 200 -
+2022-01-10 18:01:22,350 - Thread-8 - INFO - 127.0.0.1 - - [10/Jan/2022 18:01:22] "[37mGET /preview.css HTTP/1.1[0m" 200 -
+2022-01-10 18:01:22,465 - Thread-9 - INFO - 127.0.0.1 - - [10/Jan/2022 18:01:22] "[37mGET /MyPaging.css HTTP/1.1[0m" 200 -
+2022-01-10 18:01:22,465 - Thread-10 - INFO - 127.0.0.1 - - [10/Jan/2022 18:01:22] "[37mGET /jquery.min.js HTTP/1.1[0m" 200 -
+2022-01-10 18:01:22,466 - Thread-12 - INFO - 127.0.0.1 - - [10/Jan/2022 18:01:22] "[37mGET /preview.js HTTP/1.1[0m" 200 -
+2022-01-10 18:01:22,466 - Thread-11 - INFO - 127.0.0.1 - - [10/Jan/2022 18:01:22] "[37mGET /bootstrap.min.js HTTP/1.1[0m" 200 -
+2022-01-10 18:01:22,482 - Thread-13 - INFO - 127.0.0.1 - - [10/Jan/2022 18:01:22] "[37mGET /MyPaging.js HTTP/1.1[0m" 200 -
+2022-01-10 18:01:22,653 - Thread-14 - INFO - 127.0.0.1 - - [10/Jan/2022 18:01:22] "[37mGET /script.js HTTP/1.1[0m" 200 -
+2022-01-10 18:01:23,015 - Thread-16 - INFO - 127.0.0.1 - - [10/Jan/2022 18:01:23] "[37mGET /list_category HTTP/1.1[0m" 200 -
+2022-01-10 18:01:23,152 - Thread-15 - INFO - 127.0.0.1 - - [10/Jan/2022 18:01:23] "[37mGET /list_codes?page_no=1&stx_price=&stx_location=&du_price=&price_diff=&price_diff_rate=&spider_date_stx=&spider_date_du=&price_diff_rate_divider=stx&search_cate=null HTTP/1.1[0m" 200 -
+2022-01-10 18:01:23,216 - Thread-17 - INFO - 127.0.0.1 - - [10/Jan/2022 18:01:23] "[37mGET /select_task_status?search_cate=null HTTP/1.1[0m" 200 -
+2022-01-10 18:01:43,207 - Thread-18 - INFO - 127.0.0.1 - - [10/Jan/2022 18:01:43] "[37mGET /favicon.ico HTTP/1.1[0m" 200 -

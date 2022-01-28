@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>du_stx</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="preview.css" >
+    <link rel="stylesheet" type="text/css" href="MyPaging.css">
+
+
+	<script src="jquery.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+
+
+</head>
+<body style="padding-left: 30px; padding-right: 30px; padding-top:30px; padding-bottom: 100px">
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">首页</a>
+    </div>
+    <div>
+        <ul class="nav navbar-nav">
+            <li><a href="index.html">SKU查询</a></li>
+            <li class="active"><a href="calculator.html">批发计算器</a></li>
+            <li><a href="config.html">设置</a></li>
+        </ul>
+    </div>
+    </div>
+</nav>
+<div style="width:60%">
+    <!-- <h2>批发计算器</h2> -->
+    </br>
+    <form class="form-inline" role="form" action="count" method="post">
+      <div class="form-group">
+            <label for="du_check_money" class="control-label">SKU</label>
+            <input type="text" class="form-control" name="sku" id="sku" placeholder="货号">
+      </div>
+        <div class="form-group">
+            <label for="du_check_money" class="control-label">得物费率(%)</label>
+            <input type="number" class="form-control" name="fee_rate_du" id="fee_rate_du" placeholder="得物技术服务费费率">
+      </div>
+          <div class="form-group">
+            <label for="du_check_money" class="control-label">Stockx费率(%)</label>
+            <input type="number" class="form-control" name="fee_rate_stx" id="fee_rate_stx" placeholder="stockx手续费费率">
+        </div>
+        <!--<div class="form-group">
+            <label for="name">得物</label>
+             <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox1" value="price_normal_get"> 普通出售到手价
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox2" value="price_shan_get"> 闪电出售到手价
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox3" value="price_ji_get"> 极速出售到手价
+            </label>
+        </div> -->
+        <div class="form-group">
+            <label class="checkbox-inline">
+                <input type="checkbox" name="plat" value="du"> 得物
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" name="plat" value="stx"> StockX
+            </label>
+        </div>
+        <br>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-12">
+              <a onclick="get_query_data()" class="btn btn-default">查询</a>
+                <span id="load_status" style="color: red"></span>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div style="width: 70%">
+    <table class="table table-hover table-bordered">
+        <caption>基础信息</caption>
+        <tbody id="tb0">
+        </tbody>
+    </table>
+
+</div>
+
+<div>
+        <div class="col-sm-4">
+            <table class="table table-hover table-bordered">
+                <caption>得物普通出售</caption>
+                <thead>
+                    <th >尺码</th>
+                    <th >数量</th>
+                    <th >到手价</th>
+                    <th >小计</th>
+                </thead>
+                <tbody id="price_normal_get">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-4">
+            <table class="table table-hover table-bordered">
+                <caption>得物闪电出售</caption>
+                <thead>
+                    <th>尺码</th>
+                    <th>数量</th>
+                    <th>到手价</th>
+                    <th>小计</th>
+                </thead>
+                <tbody id="price_shan_get">
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-4">
+            <table class="table table-hover table-bordered">
+                <caption>得物极速出售</caption>
+                <thead>
+                    <th>尺码</th>
+                    <th>数量</th>
+                    <th>到手价</th>
+                    <th>小计</th>
+                </thead>
+                <tbody id="price_ji_get">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<div>
+    <div class="col-sm-12">
+            <table class="table table-hover table-bordered">
+                <caption>Stock普通出售</caption>
+                <thead>
+                    <th >尺码</th>
+                    <th >数量</th>
+                    <th >到手价</th>
+                    <th >小计</th>
+                </thead>
+                <tbody id="price_normal_get_stx">
+                </tbody>
+            </table>
+        </div>
+</div>
+
+<div class="modal fade" id="loadingModal" backdrop="static" keyboard="false">
+    　　<div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
+    　　　　 <h3 id="loadText">正在更新，请稍后...</h3>
+            <div class="progress progress-striped active" style="margin-bottom: 0;">
+                <div class="progress-bar" style="width: 100%;"></div>
+            </div>
+    　　</div>
+</div>
+
+<script src="preview.js"></script>
+<script src="MyPaging.js"></script>
+<script src="script.js"></script>
+
+ <script type="application/javascript">
+        let base_uri = ''
+        function timestampToTime(timestamp) {
+            var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1):date.getMonth()+1) + '-';
+            var D = (date.getDate()< 10 ? '0'+date.getDate():date.getDate())+ ' ';
+            var h = (date.getHours() < 10 ? '0'+date.getHours():date.getHours())+ ':';
+            var m = (date.getMinutes() < 10 ? '0'+date.getMinutes():date.getMinutes()) + ':';
+            var s = date.getSeconds() < 10 ? '0'+date.getSeconds():date.getSeconds();
+            return Y+M+D+h+m+s;
+        }
+
+        function get_query_data() {
+            let goods_code = $('#sku').val();
+            let fee_rate_du = $('#fee_rate_du').val();
+            let fee_rate_stx = $('#fee_rate_stx').val();
+            if(!goods_code){
+                alert('请输入货号');
+                return;
+            }
+            if(!fee_rate_du || !fee_rate_stx){
+                alert("请输入费率");
+                return;
+            }
+            let plat_types = [];
+            $('input[name="plat"]:checked').each(function () {
+                plat_types.push($(this).val());
+            });
+            if(!plat_types){
+                alert('至少选择一个平台')
+                return;
+            }
+            //$('#load_status').html('查询中，请稍后...');
+            showLoading('查询中，请稍后...');
+            $.ajax({
+                url: base_uri + '/calculator/search?code='+goods_code+'&fee_rate_du='+fee_rate_du+'&fee_rate_stx='+fee_rate_stx+'&plat_types='+plat_types.join(','),
+                type: 'get',
+                success: function (data) {
+                    $('#load_status').html('');
+                    data = JSON.parse(data);
+                    if(data.code != 1){
+                        alert(data.msg);
+                        return
+                    }
+                    renderTable(data);
+                    renderTableDuDetail(data, 'price_normal_get');
+                    renderTableDuDetail(data, 'price_shan_get');
+                    renderTableDuDetail(data, 'price_ji_get');
+                    renderTableStxDetail(data, 'price_normal_get_stx');
+                    hideLoading();
+                },
+                error: function (e){
+                    alert('系统内部错误');
+                    hideLoading();
+                    //$('#load_status').html('');
+                }
+            })
+        }
+
+        function renderTable(_data){
+            let data = _data.data;
+            let base_info = data.base_info;
+            let du = base_info.du;
+            let stx = base_info.stx;
+            let htm = '';
+            htm += '<tr><td>货号</td><td colspan="3">'+base_info.code+'</td></tr>'
+            htm += '<tr><td>得物货名</td><td>'+(du ? du.name : '--')+'</td><td>stockx货名</td><td>'+(stx ? stx.name: '--')+'</td></tr>'
+            htm += '<tr><td>发售日期</td><td>'+(du ? du.sell_date : '--')+'</td><td>发售日期</td><td>'+(stx ? stx.sell_date : '--')+'</td></tr>'
+            htm += '<tr><td>发售价</td><td>¥'+(du ? du.price : '--')+'</td><td>发售价</td><td>$'+(stx ? stx.price : '--')+'</td></tr>'
+            {#htm += '<tr><td></td><td></td><td></td><td></td></tr>'#}
+            htm += '<tr><td>总销量</td><td>'+(du ? du.sell_num : '')+'</td><td>总销量</td><td>'+(stx ? stx.sell_num : '--')+'</td></tr>'
+            htm += '<tr><td>近3天销量</td><td>'+(du ? du.sell_num_3days : '')+'</td><td>近3天销量</td><td>'+(stx ? stx.sell_num_3days : '--')+'</td></tr>'
+            htm += '<tr><td>近7天销量</td><td>'+(du ? du.sell_num_7days : '')+'</td><td>近7天销量</td><td>'+(stx ? stx.sell_num_7days : '--')+'</td></tr>'
+            $('#tb0').html(htm)
+        }
+
+        function renderTableDuDetail(_data, price_type){
+            let data = _data.data;
+            let detail = data.detail.du;
+            if(!detail){
+                return
+            }
+            let htm = '';
+            let sum_price = 0;
+            for(let i=0; i<detail.length; i++){
+                let d = detail[i];
+                htm += '<tr>';
+                htm += '<td>'+d.sku_name+'</td>'
+                htm += '<td><input type="number" value="0" class="form-control" onchange="changeNumber(this)"></td>'
+                let cur_price;
+                if(price_type == 'price_normal_get'){
+                    cur_price = d.price_normal_get
+                }else if(price_type == 'price_shan_get'){
+                    cur_price = d.price_shan_get
+                }else if(price_type == 'price_ji_get'){
+                    cur_price = d.price_ji_get
+                }
+                htm += '<td>'+ (cur_price ? cur_price : '--')+'</td>'
+                htm += '<td></td>'
+                htm += '</tr>';
+                if(cur_price){
+                    sum_price += cur_price;
+                }
+            }
+            //let avg_price_normal_get = parseFloat(sum_price/detail.length).toFixed(2);
+            htm += '<tr><td></td><td id="total_count" >总：</td><td>均：</td><td>(总)</td></tr>';
+            $('#'+price_type).html(htm);
+        }
+
+        function renderTableStxDetail(_data, price_type){
+            let data = _data.data;
+            let detail = data.detail.stx;
+            let htm = '';
+            let sum_price = 0;
+            for(let i=0; i<detail.length; i++){
+                let d = detail[i];
+                htm += '<tr>';
+                htm += '<td>'+d.sku_name+'</td>'
+                htm += '<td><input type="number" value="0" class="form-control" onchange="changeNumber(this)"></td>'
+                let cur_price;
+                if(price_type == 'price_normal_get_stx'){
+                    cur_price = d.sell_get_price
+                }
+                htm += '<td>'+ (cur_price ? cur_price : '--')+'</td>'
+                htm += '<td></td>'
+                htm += '</tr>';
+                if(cur_price){
+                    sum_price += cur_price;
+                }
+            }
+            //let avg_price_normal_get = parseFloat(sum_price/detail.length).toFixed(2);
+            htm += '<tr><td></td><td id="total_count" >总：</td><td>均：</td><td>(总)</td></tr>';
+            $('#'+price_type).html(htm);
+        }
+
+        function changeNumber(e){
+            let num = $(e).val();
+            // 小计
+            let col3 = $(e).parent().siblings()[1];
+            //alert(col3.innerText);
+            let sum = (parseFloat(num)*parseFloat(col3.innerText != '--' ? col3.innerText : 0)).toFixed(2)
+            $(e).parent().siblings()[2].innerText=sum;
+            // 数量总计
+            let rows = $(e).parent().parent().siblings();
+            // 累加每一行输入框数值、小计
+            let totalNum = 0;
+            let totalSum = 0;
+            for(let i=0; i<rows.length-1; i++){
+                let r = rows[i];
+                let inputNum = r.children[1].children[0].value;
+                totalNum += parseInt(inputNum);
+                let rowSum = r.children[3].innerText;
+                if(rowSum){
+                    totalSum += parseFloat(rowSum);
+                }
+            }
+            totalNum += parseInt(num);
+            totalSum += parseFloat(sum);
+            totalSum = totalSum.toFixed(2);
+            rows[rows.length-1].children[1].innerText = '总'+totalNum;
+            rows[rows.length-1].children[3].innerText = '(总)'+totalSum;
+            rows[rows.length-1].children[2].innerText = '均：'+parseFloat(totalSum/totalNum).toFixed(2);
+        }
+
+        function showLoading(loadText) {
+            if(loadText){
+                $("#loadText").html(loadText)
+            }
+            //$('#loadingModal').modal({backdrop: 'static', keyboard: false});
+            $('#loadingModal').modal('show');
+        }
+        function hideLoading() {
+            $('#loadingModal').modal('hide');
+        }
+
+        let goods_code = '';
+    $(function () {
+            //setTimeout(initTableCheckboxEvent, 1000)
+            //setTimeout(initTableCheckbox, 1000)
+            // setInterval(list_goods, 20*1000)
+            //setInterval(reload_page, 30*1000)
+
+        })
+    </script>
+
+</body>
+</html>

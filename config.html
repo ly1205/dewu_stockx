@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>du_stx</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="preview.css" >
+    <link rel="stylesheet" type="text/css" href="MyPaging.css">
+
+
+	<script src="jquery.min.js"></script>
+	<script src="bootstrap.min.js"></script>
+
+
+</head>
+<body style="padding-left: 30px; padding-right: 30px; padding-top:30px; padding-bottom: 100px">
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">首页</a>
+    </div>
+    <div>
+        <ul class="nav navbar-nav">
+            <li><a href="index.html">SKU查询</a></li>
+            <li><a href="calculator.html">批发计算器</a></li>
+            <li class="active"><a href="config.html">设置</a></li>
+        </ul>
+    </div>
+    </div>
+</nav>
+<div style="width:60%">
+    <form class="form-horizontal" role="form" id="cfg_form">
+        <div class="form-group">
+            <label for="firstname" class="col-sm-4 control-label" style="color: red">得物</label>
+            <div class="col-sm-8">
+            </div>
+      </div>
+      <div class="form-group">
+        <label for="du_tech_money" class="col-sm-4 control-label">①技术服务费(%)</label>
+        <div class="col-sm-8">
+          <input type="number" class="form-control" name="du_tech_money" step="0.01" placeholder="技术服务费">
+        </div>
+      </div>
+        <div class="form-group">
+        <label for="du_transfer_money" class="col-sm-4 control-label">②转账服务费(%)</label>
+        <div class="col-sm-8">
+          <input type="number" class="form-control" name="du_transfer_money" step="0.01" placeholder="转账服务费">
+        </div>
+      </div>
+      <div class="form-group">
+            <label for="du_check_money" class="col-sm-4 control-label">③查验费(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="du_check_money" placeholder="查验费">
+            </div>
+      </div>
+        <div class="form-group">
+            <label for="du_discern_money" class="col-sm-4 control-label">④鉴别费(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="du_discern_money" placeholder="鉴别费">
+            </div>
+      </div>
+          <div class="form-group">
+            <label for="du_pkg_money" class="col-sm-4 control-label">⑤包装服务费(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="du_pkg_money" placeholder="包装服务费">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="firstname" class="col-sm-4 control-label" style="color: red">StockX</label>
+            <div class="col-sm-8">
+            </div>
+        </div>
+          <div class="form-group">
+            <label for="stx_trade_money_rate" class="col-sm-4 control-label">①【卖出】交易费用(%)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="stx_trade_money_rate" step="0.01" placeholder="【卖出】交易费用">
+            </div>
+      </div>
+        <div class="form-group">
+            <label for="stx_transfer_money_rate" class="col-sm-4 control-label">②【卖出】转账手续费(%)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="stx_transfer_money_rate" step="0.01" placeholder="【卖出】转账手续费">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="stx_buy_fee_rate" class="col-sm-4 control-label">③【购买】手续费(%)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="stx_buy_fee_rate" step="0.01" placeholder="【购买】手续费">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="stx_postage_money" class="col-sm-4 control-label">④【购买】运费(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="stx_postage_money" step="0.01" placeholder="【购买】运费">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="firstname" class="col-sm-4 control-label" style="color: red">国际运费</label>
+            <div class="col-sm-8">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="firstname" class="col-sm-4 control-label" style="color: blue">运出国</label>
+            <div class="col-sm-8">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="outer_postage_money_usa" class="col-sm-4 control-label">美国(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="outer_postage_money_usa"  placeholder="美国">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="outer_postage_money_hongkong" class="col-sm-4 control-label">香港(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="outer_postage_money_hongkong" placeholder="香港">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="outer_postage_money_japan" class="col-sm-4 control-label">日本(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="outer_postage_money_japan" placeholder="日本">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="outer_postage_money_korea" class="col-sm-4 control-label">韩国(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="outer_postage_money_korea" placeholder="韩国">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="outer_postage_money_mal" class="col-sm-4 control-label">马来西亚(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="outer_postage_money_mal" placeholder="马来西亚">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="outer_postage_money_singapore" class="col-sm-4 control-label">新加坡(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="outer_postage_money_singapore" placeholder="新加坡">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="firstname" class="col-sm-4 control-label" style="color: blue">运回国</label>
+            <div class="col-sm-8">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="back_postage_money_usa" class="col-sm-4 control-label">美国(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="back_postage_money_usa" placeholder="美国">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="back_postage_money_hongkong" class="col-sm-4 control-label">香港(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="back_postage_money_hongkong" placeholder="香港">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="back_postage_money_japan" class="col-sm-4 control-label">日本(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="back_postage_money_japan"  placeholder="日本">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="back_postage_money_korea" class="col-sm-4 control-label">韩国(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="back_postage_money_korea"  placeholder="韩国">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="back_postage_money_mal" class="col-sm-4 control-label">马来西亚(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="back_postage_money_mal" placeholder="马来西亚">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="back_postage_money_singapore" class="col-sm-4 control-label">新加坡(元)</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" name="back_postage_money_singapore" placeholder="新加坡">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="firstname" class="col-sm-4 control-label" style="color: red">当前汇率(%)</label>
+            <div class="col-sm-8">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exchange_rate_rmb_dollar" class="col-sm-4 control-label">①人民币：美元</label>
+            <div class="col-sm-2">
+              <input type="number" class="form-control" id="exchange_rate_rmb_dollar" name="exchange_rate_rmb_dollar" step="0.01" placeholder="人民币：美元">
+            </div>
+            <div class="col-sm-3">
+              <a onclick="fetch_exchange_rate();" class="btn btn-primary">同步百度汇率</a>
+            </div>
+            <div class="col-sm-3" id="exchange_info" style="color: green"></div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-12">
+              <button onclick="save_config()" class="btn btn-default">提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="preview.js"></script>
+<script src="MyPaging.js"></script>
+<script src="script.js"></script>
+
+ <script type="application/javascript">
+        let base_uri = ''
+        jQuery.prototype.serializeObject=function(){
+            var obj=new Object();
+            $.each(this.serializeArray(),function(index,param){
+                if(!(param.name in obj)){
+                    obj[param.name]=param.value;
+                }
+            });
+            return obj;
+        };
+        function timestampToTime(timestamp) {
+            var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1):date.getMonth()+1) + '-';
+            var D = (date.getDate()< 10 ? '0'+date.getDate():date.getDate())+ ' ';
+            var h = (date.getHours() < 10 ? '0'+date.getHours():date.getHours())+ ':';
+            var m = (date.getMinutes() < 10 ? '0'+date.getMinutes():date.getMinutes()) + ':';
+            var s = date.getSeconds() < 10 ? '0'+date.getSeconds():date.getSeconds();
+            return Y+M+D+h+m+s;
+        }
+
+        function load_config(){
+             $.ajax({
+                url: base_uri + 'load_config',
+                type: 'get',
+                success: function (data) {
+                    //alert(data.msg);
+                    let configs = data.data;
+                    $.each(configs, function (k, v){
+                        $($("input[name='"+k+"']")[0]).val(v);
+                    })
+                },
+                error: function (e){
+                    alert('系统内部错误');
+                }
+            })
+        }
+
+        function save_config(){
+            $.ajax({
+                url: base_uri + 'save_config',
+                type: 'post',
+                data: $("#cfg_form").serializeObject(),
+                success: function (data) {
+                    alert(data.msg);
+                },
+                error: function (e){
+                    alert('系统内部错误');
+                }
+            })
+        }
+
+        function fetch_exchange_rate(){
+            $.ajax({
+                url: base_uri + 'fetch_exchange_rate',
+                type: 'get',
+                success: function (data) {
+                    //alert(data.msg);
+                    let rate = data.rate;
+                    if(!rate){
+                        alert('汇率获取失败');
+                    }else{
+                        $("#exchange_info").html("获取成功："+rate[0])
+                        $('#exchange_rate_rmb_dollar').val(parseFloat(rate[0]).toFixed(2));
+                    }
+                },
+                error: function (e){
+                    alert('系统内部错误');
+                }
+            })
+        }
+
+        function get_base_info(goods_code) {
+            $.ajax({
+                url: base_uri + 'get_base_info?goods_code='+goods_code,
+                type: 'get',
+                success: function (data) {
+                    renderTable(data);
+                },
+                error: function (e){
+                    alert('系统内部错误');
+                }
+            })
+        }
+
+        function get_sku_price_list(goods_code) {
+            $.ajax({
+                url: base_uri + 'get_sku_price_list?code='+goods_code,
+                type: 'get',
+                success: function (data) {
+                    render_sku_price_table(data.data);
+                },
+                error: function (e){
+                    alert('系统内部错误');
+                }
+            })
+        }
+
+        function render_sku_price_table(data){
+            // 第一行
+            let htm = '<tr>';
+            for(let i=0; i<data.length; i++){
+                let row = data[i];
+                htm += '<td>'+row[1]+'</td>';
+            }
+            htm += '</tr>';
+            // 第二行
+            htm += '<tr>';
+            for(let i=0; i<data.length; i++){
+                let row = data[i];
+                htm += '<td>'+row[2]+'&nbsp;&nbsp;&nbsp;</br>';
+                htm += row[3] + '</br>';
+                htm += row[4] + '</br>';
+                htm += row[5] + '</br>';
+                htm += '</td>'
+            }
+            htm += '</tr>';
+            $('#tb2').html(htm);
+        }
+
+
+        function renderTable(_data){
+            let data = _data.data;
+            let htm = '';
+            htm += '<tr><td>货号</td><td colspan="3">'+goods_code+'</td></tr>'
+            htm += '<tr><td>得物货名</td><td>'+data[0]+'</td><td>stockx货名</td><td>'+data[6]+'</td></tr>'
+            htm += '<tr><td>发售日期</td><td>'+data[1]+'</td><td>发售日期</td><td>'+data[7]+'</td></tr>'
+            htm += '<tr><td>发售价</td><td>¥'+data[2]+'</td><td>发售价</td><td>$'+data[8]+'</td></tr>'
+            {#htm += '<tr><td></td><td></td><td></td><td></td></tr>'#}
+            htm += '<tr><td>总销量</td><td>'+data[3]+'</td><td>总销量</td><td>'+data[9]+'</td></tr>'
+            htm += '<tr><td>近3天销量</td><td>'+data[4]+'</td><td>近3天销量</td><td>'+data[10]+'</td></tr>'
+            htm += '<tr><td>近7天销量</td><td>'+data[5]+'</td><td>近7天销量</td><td>'+data[11]+'</td></tr>'
+            $('#tb').html(htm)
+        }
+
+        let goods_code = '';
+    $(function () {
+            //setTimeout(initTableCheckboxEvent, 1000)
+            //setTimeout(initTableCheckbox, 1000)
+            // setInterval(list_goods, 20*1000)
+            //setInterval(reload_page, 30*1000)
+        load_config();
+
+        })
+    </script>
+
+</body>
+</html>
