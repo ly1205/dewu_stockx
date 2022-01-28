@@ -22,15 +22,17 @@ pip install -r requirements.txt
 
 访问http://localhost:18866/
 
-![8f69f883e5ac47700eae5a700547b5c](C:\Users\32892\Desktop\8f69f883e5ac47700eae5a700547b5c.jpg)
+![8f69f883e5ac47700eae5a700547b5c](https://github.com/mshkqsbsbrhc/dewu_stockx/blob/main/pic/8f69f883e5ac47700eae5a700547b5c.jpg)
 
-![a99d35addc25456b3264cfedeb00195](C:\Users\32892\Desktop\a99d35addc25456b3264cfedeb00195.jpg)
+![a99d35addc25456b3264cfedeb00195](https://github.com/mshkqsbsbrhc/dewu_stockx/blob/main/pic/a99d35addc25456b3264cfedeb00195.jpg)
 
-![5f52c8325906799881026c7e07fbe6b](C:\Users\32892\Desktop\5f52c8325906799881026c7e07fbe6b.jpg)
+![5f52c8325906799881026c7e07fbe6b](https://github.com/mshkqsbsbrhc/dewu_stockx/blob/main/pic/5f52c8325906799881026c7e07fbe6b.jpg)
 
-![e6fe0c66fb32a3d4ab6405e87a0d7ec](C:\Users\32892\Desktop\e6fe0c66fb32a3d4ab6405e87a0d7ec.jpg)![c2045696e582ad75d5143ae31f1e7c3](C:\Users\32892\Desktop\c2045696e582ad75d5143ae31f1e7c3.jpg)
+![e6fe0c66fb32a3d4ab6405e87a0d7ec](https://github.com/mshkqsbsbrhc/dewu_stockx/blob/main/pic/e6fe0c66fb32a3d4ab6405e87a0d7ec.jpg)
 
-![415ca0c41e1113116e0064a008f6e66](C:\Users\32892\Desktop\415ca0c41e1113116e0064a008f6e66.jpg)
+![c2045696e582ad75d5143ae31f1e7c3](https://github.com/mshkqsbsbrhc/dewu_stockx/blob/main/pic/c2045696e582ad75d5143ae31f1e7c3.jpg)
+
+![415ca0c41e1113116e0064a008f6e66](https://github.com/mshkqsbsbrhc/dewu_stockx/blob/main/pic/415ca0c41e1113116e0064a008f6e66.jpg)
 
 
 
